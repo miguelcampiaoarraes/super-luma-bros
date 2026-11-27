@@ -89,7 +89,7 @@ const LEVELS = [
     enemies: [
       { x: 300, y: 438, minX: 120, maxX: 460, speed: 1.5, type: "slime" },
       { x: 1260, y: 188, minX: 1210, maxX: 1360, speed: 1.2, type: "bat" },
-      { x: 2300, y: 438, minX: 2180, maxX: 2500, speed: 2.0, type: "slime" }
+      { x: 2300, y: 438, minX: 2180, maxX: 2500, speed: 2.0, type: "shooter" }
     ],
     hazards: [],
     portals: [],
@@ -179,7 +179,7 @@ const LEVELS = [
     ],
     enemies: [
       { x: 400, y: 438, minX: 200, maxX: 560, speed: 1.7, type: "slime" },
-      { x: 1400, y: 438, minX: 1250, maxX: 1680, speed: 2.1, type: "slime" },
+      { x: 1400, y: 438, minX: 1250, maxX: 1680, speed: 2.1, type: "shooter" },
       { x: 2480, y: 438, minX: 2380, maxX: 2620, speed: 2.0, type: "slime" }
     ],
     hazards: [
@@ -319,7 +319,7 @@ const LEVELS = [
       { x: 1540, y: 320 }, { x: 1830, y: 250 }, { x: 2220, y: 420 }
     ],
     enemies: [
-      { x: 1100, y: 438, minX: 980, maxX: 1340, speed: 2.3, type: "slime" },
+      { x: 1100, y: 438, minX: 980, maxX: 1340, speed: 2.3, type: "shooter" },
       { x: 2180, y: 438, minX: 2020, maxX: 2360, speed: 2.5, type: "slime" }
     ],
     hazards: [
@@ -367,7 +367,7 @@ const LEVELS = [
     ],
     enemies: [
       { x: 450, y: 438, minX: 250, maxX: 680, speed: 2.2, type: "slime" },
-      { x: 1200, y: 438, minX: 950, maxX: 1480, speed: 2.5, type: "slime" },
+      { x: 1200, y: 438, minX: 950, maxX: 1480, speed: 2.5, type: "shooter" },
       { x: 1950, y: 438, minX: 1740, maxX: 2150, speed: 2.6, type: "slime" }
     ],
     hazards: [
@@ -416,7 +416,7 @@ const LEVELS = [
     ],
     enemies: [
       { x: 400, y: 438, minX: 200, maxX: 520, speed: 2.1, type: "bat" },
-      { x: 1450, y: 438, minX: 1240, maxX: 1680, speed: 2.5, type: "slime" },
+      { x: 1450, y: 438, minX: 1240, maxX: 1680, speed: 2.5, type: "shooter" },
       { x: 2600, y: 438, minX: 2450, maxX: 2800, speed: 2.7, type: "slime" }
     ],
     hazards: [

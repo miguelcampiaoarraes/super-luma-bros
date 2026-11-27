@@ -177,6 +177,7 @@ let portals = [];
 let items = [];
 let fireballs = [];
 let bossShots = [];
+let enemyShots = [];
 let particles = [];
 let boss = null;
 let cameraX = 0;
@@ -219,7 +220,7 @@ function loadLevel(index, showStoryScreen = true) {
 
   qBlocks = level.qBlocks.map(b => ({ ...b, used: false, w: 34, h: 34 }));
   levelCoins = level.coins.map(c => ({ ...c, collected: false, r: 10 }));
-  enemies = level.enemies.map(e => ({ ...e, w: 32, h: 32, dir: 1, alive: true }));
+  enemies = level.enemies.map(e => ({ ...e, w: 34, h: 34, dir: 1, alive: true, shootTimer: 70 + Math.floor(Math.random() * 50) }));
   hazards = level.hazards.map(h => ({ ...h, startY: h.y, dir: -1 }));
   portals = level.portals || [];
   boss = level.boss ? { ...level.boss, dir: -1, shootTimer: 90, hurtTimer: 0 } : null;
@@ -227,6 +228,7 @@ function loadLevel(index, showStoryScreen = true) {
   items = [];
   fireballs = [];
   bossShots = [];
+  enemyShots = [];
   particles = [];
   cameraX = 0;
   windTimer = 0;
@@ -579,6 +581,22 @@ function update() {
     en.x += en.speed * en.dir;
     if (en.x < en.minX || en.x > en.maxX) en.dir *= -1;
 
+    // Inimigo atirador
+    if (en.type === "shooter") {
+      en.shootTimer--;
+      if (en.shootTimer <= 0 && Math.abs(player.x - en.x) < 480) {
+        en.shootTimer = 110;
+        const dirToPlayer = player.x < en.x ? -1 : 1;
+        enemyShots.push({
+          x: en.x + (dirToPlayer === 1 ? en.w : -10),
+          y: en.y + 12,
+          w: 12,
+          h: 12,
+          vx: dirToPlayer * 4.5
+        });
+      }
+    }
+
     if (rectIntersect(player, en)) {
       if (player.starTimer > 0 || (player.vy > 0 && player.y + player.h - player.vy <= en.y + 14)) {
         en.alive = false;
@@ -591,6 +609,20 @@ function update() {
         hurtPlayer();
         return;
       }
+    }
+  }
+
+  // Projéteis dos inimigos atiradores
+  for (let i = enemyShots.length - 1; i >= 0; i--) {
+    const es = enemyShots[i];
+    es.x += es.vx;
+    if (rectIntersect(player, es)) {
+      enemyShots.splice(i, 1);
+      hurtPlayer();
+      return;
+    }
+    if (es.x < cameraX - 60 || es.x > cameraX + canvas.width + 60) {
+      enemyShots.splice(i, 1);
     }
   }
 
@@ -814,23 +846,113 @@ function draw() {
     ctx.fillRect(it.x, it.y, it.w, it.h);
   }
 
-  // Inimigos
+  // Inimigos estilizados 2D
+  const animTick = Date.now() / 120;
   for (const en of enemies) {
     if (!en.alive) continue;
-    ctx.fillStyle = en.type === "bat" ? "#7209b7" : "#ef476f";
-    ctx.fillRect(en.x, en.y, en.w, en.h);
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(en.x + 6, en.y + 8, 6, 6);
-    ctx.fillRect(en.x + 20, en.y + 8, 6, 6);
+    ctx.save();
+    const cx = en.x + en.w / 2;
+    const cy = en.y + en.h / 2;
+
+    if (en.type === "bat") {
+      // Morcego/Abelha com asas batendo
+      const wingY = Math.sin(animTick * 2) * 6;
+      ctx.fillStyle = "#5a189a";
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(en.x - 10, cy - 10 + wingY);
+      ctx.lineTo(en.x - 4, cy + 4);
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(en.x + en.w + 10, cy - 10 + wingY);
+      ctx.lineTo(en.x + en.w + 4, cy + 4);
+      ctx.fill();
+
+      ctx.fillStyle = "#9d4edd";
+      ctx.beginPath();
+      ctx.arc(cx, cy, 15, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#ffdd00";
+      ctx.fillRect(cx - 7, cy - 4, 5, 5);
+      ctx.fillRect(cx + 2, cy - 4, 5, 5);
+    } else if (en.type === "shooter") {
+      // Planta/Canhão Atirador (verde vivo + detalhes amarelos/vermelhos)
+      ctx.fillStyle = "#2b9348";
+      ctx.fillRect(en.x + 2, en.y + 6, en.w - 4, en.h - 6);
+      ctx.strokeStyle = "#111";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(en.x + 2, en.y + 6, en.w - 4, en.h - 6);
+      // Boca/Canhão apontando para o jogador
+      const dir = player.x < en.x ? -1 : 1;
+      ctx.fillStyle = "#ff2a2a";
+      ctx.fillRect(dir === 1 ? en.x + en.w - 4 : en.x - 6, en.y + 10, 12, 12);
+      // Olhos bravos
+      ctx.fillStyle = "#ffdd00";
+      ctx.fillRect(en.x + 8, en.y + 12, 6, 6);
+      ctx.fillRect(en.x + 20, en.y + 12, 6, 6);
+    } else {
+      // Slime/Cogumelo Bravo vermelho vivo
+      const bounce = Math.abs(Math.sin(animTick)) * 3;
+      ctx.fillStyle = "#ff2a2a";
+      ctx.beginPath();
+      ctx.arc(cx, cy + 2 - bounce, 16, Math.PI, 0);
+      ctx.lineTo(en.x + en.w, en.y + en.h);
+      ctx.lineTo(en.x, en.y + en.h);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = "#111";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      // Manchas amarelas
+      ctx.fillStyle = "#ffdd00";
+      ctx.beginPath();
+      ctx.arc(cx - 6, en.y + 10 - bounce, 3, 0, Math.PI * 2);
+      ctx.arc(cx + 7, en.y + 12 - bounce, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+      // Olhos
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(cx - 8, en.y + 16 - bounce, 6, 6);
+      ctx.fillRect(cx + 2, en.y + 16 - bounce, 6, 6);
+      ctx.fillStyle = "#111";
+      ctx.fillRect(cx - 6, en.y + 18 - bounce, 3, 3);
+      ctx.fillRect(cx + 4, en.y + 18 - bounce, 3, 3);
+    }
+    ctx.restore();
   }
 
-  // Chefe Final
+  // Projéteis dos inimigos atiradores
+  for (const es of enemyShots) {
+    ctx.fillStyle = "#ffdd00";
+    ctx.beginPath();
+    ctx.arc(es.x + 6, es.y + 6, 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#ff2a2a";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  // Chefe Final (Lorde Malakor estilizado)
   if (boss && boss.hp > 0) {
-    ctx.fillStyle = boss.hurtTimer % 6 > 2 ? "#ffffff" : "#9b5de5";
-    ctx.fillRect(boss.x, boss.y, boss.w, boss.h);
-    ctx.fillStyle = "#ff006e";
-    ctx.fillRect(boss.x + 14, boss.y + 20, 12, 12);
-    ctx.fillRect(boss.x + 46, boss.y + 20, 12, 12);
+    ctx.save();
+    ctx.fillStyle = boss.hurtTimer % 6 > 2 ? "#ffffff" : "#7209b7";
+    ctx.fillRect(boss.x, boss.y + 12, boss.w, boss.h - 12);
+    ctx.strokeStyle = "#111";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(boss.x, boss.y + 12, boss.w, boss.h - 12);
+    // Chifres
+    ctx.fillStyle = "#ffdd00";
+    ctx.beginPath();
+    ctx.moveTo(boss.x + 8, boss.y + 12);
+    ctx.lineTo(boss.x - 4, boss.y - 8);
+    ctx.lineTo(boss.x + 20, boss.y + 12);
+    ctx.moveTo(boss.x + boss.w - 8, boss.y + 12);
+    ctx.lineTo(boss.x + boss.w + 4, boss.y - 8);
+    ctx.lineTo(boss.x + boss.w - 20, boss.y + 12);
+    ctx.fill();
+    // Olhos
+    ctx.fillStyle = "#ff2a2a";
+    ctx.fillRect(boss.x + 14, boss.y + 28, 12, 12);
+    ctx.fillRect(boss.x + 46, boss.y + 28, 12, 12);
+    ctx.restore();
   }
 
   // Projéteis do chefe e do jogador
@@ -859,16 +981,70 @@ function draw() {
     ctx.fill();
   }
 
-  // Jogador (Luma)
+  // Jogadora: Vaca Super Mu 2D estilizada
   if (player.invulnTimer % 6 < 3) {
+    ctx.save();
+    const px = player.x;
+    const py = player.y;
+    const pw = player.w;
+    const ph = player.h;
+    const walkOffset = Math.abs(player.vx) > 0.5 && player.onGround ? Math.sin(Date.now() / 70) * 4 : 0;
+
+    // Capa vermelha/dourada atrás
+    ctx.fillStyle = player.power === "fire" ? "#ffdd00" : "#ff2a2a";
+    ctx.beginPath();
+    ctx.moveTo(px + pw / 2, py + 12);
+    ctx.lineTo(px + (player.facing === 1 ? -8 : pw + 8), py + ph - 6);
+    ctx.lineTo(px + pw / 2, py + ph - 10);
+    ctx.closePath();
+    ctx.fill();
+
+    // Corpo branco da vaca
     ctx.fillStyle = player.starTimer > 0
-      ? `hsl(${(Date.now() / 5) % 360}, 90%, 60%)`
-      : player.power === "fire" ? "#ff9f1c" : "#ef233c";
-    ctx.fillRect(player.x, player.y, player.w, player.h);
-    // Boné / Olhos
-    ctx.fillStyle = "#fff";
-    const eyeX = player.facing === 1 ? player.x + 18 : player.x + 6;
-    ctx.fillRect(eyeX, player.y + 10, 7, 7);
+      ? `hsl(${(Date.now() / 5) % 360}, 95%, 65%)`
+      : "#ffffff";
+    ctx.fillRect(px + 2, py + 8, pw - 4, ph - 14);
+    ctx.strokeStyle = "#111";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(px + 2, py + 8, pw - 4, ph - 14);
+
+    // Manchas pretas de vaca
+    ctx.fillStyle = "#111";
+    ctx.beginPath();
+    ctx.arc(px + 10, py + 20, 4, 0, Math.PI * 2);
+    ctx.arc(px + 22, py + 26, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Chifres amarelos
+    ctx.fillStyle = "#ffdd00";
+    ctx.beginPath();
+    ctx.moveTo(px + 6, py + 8);
+    ctx.lineTo(px + 3, py);
+    ctx.lineTo(px + 11, py + 8);
+    ctx.moveTo(px + pw - 6, py + 8);
+    ctx.lineTo(px + pw - 3, py);
+    ctx.lineTo(px + pw - 11, py + 8);
+    ctx.fill();
+
+    // Focinho rosa
+    ctx.fillStyle = "#ff8fa3";
+    const snoutX = player.facing === 1 ? px + 12 : px + 4;
+    ctx.fillRect(snoutX, py + 16, 16, 9);
+    ctx.fillStyle = "#111";
+    ctx.fillRect(snoutX + 3, py + 19, 2, 2);
+    ctx.fillRect(snoutX + 11, py + 19, 2, 2);
+
+    // Olhos
+    ctx.fillStyle = "#111";
+    const eyeX = player.facing === 1 ? px + 18 : px + 8;
+    ctx.fillRect(eyeX, py + 11, 4, 4);
+
+    // Patinhas animadas
+    ctx.fillStyle = "#111";
+    ctx.fillRect(px + 5, py + ph - 6 + walkOffset, 7, 6);
+    ctx.fillRect(px + pw - 12, py + ph - 6 - walkOffset, 7, 6);
+
+    ctx.restore();
   }
 
   // Partículas
