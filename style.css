@@ -207,28 +207,26 @@ body {
 }
 
 .story-badge {
-.cover-badge {
   display: inline-block;
-  background: #4d568d;
-  color: #fff;
+  background: #f72585;
+  color: #ffffff;
   font-size: 12px;
-  font-weight: 700;
-  padding: 3px 10px;
+  font-weight: 800;
+  padding: 4px 12px;
   border-radius: 999px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .attr-pill {
-.cover-badge {
   display: inline-block;
-  background: rgba(255, 209, 102, 0.15);
-  color: #ffd166;
-  border: 1px solid #ffd166;
-  padding: 4px 12px;
+  background: rgba(199, 125, 255, 0.2);
+  color: #ffccd5;
+  border: 1px solid #c77dff;
+  padding: 5px 14px;
   border-radius: 999px;
   font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 12px;
+  font-weight: 700;
+  margin-bottom: 14px;
 }
 
 .menu-buttons {
