@@ -289,10 +289,10 @@ body {
 }
 
 .level-btn {
-  background: #283056;
-  border: 2px solid #4d568d;
+  background: #240046;
+  border: 2px solid #c77dff;
   border-radius: 10px;
-  padding: 10px 8px;
+  padding: 12px 10px;
   color: #fff;
   cursor: pointer;
   text-align: center;
@@ -300,25 +300,27 @@ body {
 }
 
 .level-btn:hover:not(:disabled) {
-  border-color: #ffd166;
+  border-color: #ff85a1;
+  background: #3c096c;
   transform: translateY(-2px);
 }
 
 .level-btn:disabled {
-  opacity: 0.4;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
 .level-btn .lvl-num {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
-  color: #ffd166;
+  color: #ff85a1;
 }
 
 .level-btn .lvl-name {
-  font-size: 11px;
-  color: #cbd5e1;
+  font-size: 12px;
+  color: #f3e8ff;
   margin-top: 4px;
+  line-height: 1.25;
 }
 
 .controls-list {
