@@ -256,8 +256,8 @@ function updateHUD() {
   hudCoins.textContent = coins;
   hudScore.textContent = score;
   hudLevel.textContent = `${currentLevelIndex + 1}/10`;
-  const powerNames = { normal: "Normal", big: "Grande", fire: "Fogo 🔥" };
-  hudPower.textContent = player && player.starTimer > 0 ? "Estrela ⭐" : (powerNames[player ? player.power : "normal"]);
+  const powerNames = { normal: "NORMAL", big: "GRANDE", fire: "FOGO" };
+  hudPower.textContent = player && player.starTimer > 0 ? "ESTRELA" : (powerNames[player ? player.power : "normal"]);
   hudAttr.textContent = level ? level.attrName : "Clássico";
 }
 
@@ -290,8 +290,8 @@ function hurtPlayer() {
   updateHUD();
   if (lives <= 0) {
     gameState = "end";
-    document.getElementById("end-title").textContent = "💀 Fim de Jogo";
-    document.getElementById("end-text").textContent = `Luma perdeu todas as vidas na fase "${level.name}". Mas Veridia ainda precisa de você!`;
+    document.getElementById("end-title").textContent = "FIM DE JOGO";
+    document.getElementById("end-text").textContent = `Mu perdeu todas as vidas na fase "${level.name}". Mas o Reino Pasto Verde precisa de voce!`;
     showScreen("end");
   } else {
     loadLevel(currentLevelIndex, false);
@@ -731,15 +731,16 @@ function winLevel() {
     loadLevel(currentLevelIndex + 1, true);
   } else {
     gameState = "end";
-    document.getElementById("end-title").textContent = "🏆 Vitória Épica!";
+    document.getElementById("end-title").textContent = "VITORIA EPICA!";
     document.getElementById("end-text").textContent =
-      `Parabéns! Luma derrotou Lorde Malakor, recuperou todos os 10 Cristais Estelares e salvou o Reino de Veridia! Pontuação Final: ${score} pontos.`;
+      `Parabens! Mu derrotou Lorde Malakor, recuperou todos os 10 Cristais Estelares e salvou o Reino! Pontuacao Final: ${score} pontos.`;
     showScreen("end");
   }
 }
 
 function draw() {
   if (!level) return;
+  ctx.imageSmoothingEnabled = false;
 
   // Fundo gradiente
   const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
@@ -747,6 +748,9 @@ function draw() {
   grad.addColorStop(1, level.bgBottom);
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Fundo Parallax Pixel Art (montanhas, pinheiros e nuvens)
+  drawPixelParallax(ctx, cameraX, canvas.width, canvas.height, level);
 
   ctx.save();
   ctx.translate(-cameraX, 0);
@@ -785,30 +789,23 @@ function draw() {
     }
   }
 
-  // Blocos "?"
+  // Blocos "?" Pixel Art
   for (const b of qBlocks) {
-    ctx.fillStyle = b.used ? "#6c757d" : "#ffbe0b";
-    ctx.fillRect(b.x, b.y, b.w, b.h);
-    ctx.strokeStyle = "#000";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(b.x, b.y, b.w, b.h);
-    if (!b.used) {
-      ctx.fillStyle = "#111";
-      ctx.font = "bold 20px sans-serif";
-      ctx.fillText("?", b.x + 11, b.y + 24);
+    if (b.used) {
+      ctx.fillStyle = "#6c757d";
+      ctx.fillRect(b.x, b.y, b.w, b.h);
+      ctx.strokeStyle = "#111";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(b.x, b.y, b.w, b.h);
+    } else {
+      drawPixelSprite(ctx, QBLOCK_SPRITE, { K: "#111111", Y: "#ffbe0b" }, b.x, b.y, 2.85);
     }
   }
 
-  // Moedas
+  // Moedas Pixel Art
   for (const c of levelCoins) {
     if (c.collected) continue;
-    ctx.fillStyle = "#ffd166";
-    ctx.beginPath();
-    ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = "#f48c06";
-    ctx.lineWidth = 2;
-    ctx.stroke();
+    drawPixelSprite(ctx, COIN_SPRITE, { K: "#111111", Y: "#ffdd00", W: "#ffffff" }, c.x - 10, c.y - 10, 2.5);
   }
 
   // Portais
@@ -846,77 +843,17 @@ function draw() {
     ctx.fillRect(it.x, it.y, it.w, it.h);
   }
 
-  // Inimigos estilizados 2D
-  const animTick = Date.now() / 120;
+  // Inimigos Pixel Art
   for (const en of enemies) {
     if (!en.alive) continue;
-    ctx.save();
-    const cx = en.x + en.w / 2;
-    const cy = en.y + en.h / 2;
-
     if (en.type === "bat") {
-      // Morcego/Abelha com asas batendo
-      const wingY = Math.sin(animTick * 2) * 6;
-      ctx.fillStyle = "#5a189a";
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.lineTo(en.x - 10, cy - 10 + wingY);
-      ctx.lineTo(en.x - 4, cy + 4);
-      ctx.moveTo(cx, cy);
-      ctx.lineTo(en.x + en.w + 10, cy - 10 + wingY);
-      ctx.lineTo(en.x + en.w + 4, cy + 4);
-      ctx.fill();
-
-      ctx.fillStyle = "#9d4edd";
-      ctx.beginPath();
-      ctx.arc(cx, cy, 15, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = "#ffdd00";
-      ctx.fillRect(cx - 7, cy - 4, 5, 5);
-      ctx.fillRect(cx + 2, cy - 4, 5, 5);
+      const hoverY = Math.sin(Date.now() / 110) * 4;
+      drawPixelSprite(ctx, BAT_SPRITE, BAT_PALETTE, en.x, en.y + hoverY, 2.5);
     } else if (en.type === "shooter") {
-      // Planta/Canhão Atirador (verde vivo + detalhes amarelos/vermelhos)
-      ctx.fillStyle = "#2b9348";
-      ctx.fillRect(en.x + 2, en.y + 6, en.w - 4, en.h - 6);
-      ctx.strokeStyle = "#111";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(en.x + 2, en.y + 6, en.w - 4, en.h - 6);
-      // Boca/Canhão apontando para o jogador
-      const dir = player.x < en.x ? -1 : 1;
-      ctx.fillStyle = "#ff2a2a";
-      ctx.fillRect(dir === 1 ? en.x + en.w - 4 : en.x - 6, en.y + 10, 12, 12);
-      // Olhos bravos
-      ctx.fillStyle = "#ffdd00";
-      ctx.fillRect(en.x + 8, en.y + 12, 6, 6);
-      ctx.fillRect(en.x + 20, en.y + 12, 6, 6);
+      drawPixelSprite(ctx, SHOOTER_SPRITE, SHOOTER_PALETTE, en.x, en.y, 2.6, player.x < en.x);
     } else {
-      // Slime/Cogumelo Bravo vermelho vivo
-      const bounce = Math.abs(Math.sin(animTick)) * 3;
-      ctx.fillStyle = "#ff2a2a";
-      ctx.beginPath();
-      ctx.arc(cx, cy + 2 - bounce, 16, Math.PI, 0);
-      ctx.lineTo(en.x + en.w, en.y + en.h);
-      ctx.lineTo(en.x, en.y + en.h);
-      ctx.closePath();
-      ctx.fill();
-      ctx.strokeStyle = "#111";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      // Manchas amarelas
-      ctx.fillStyle = "#ffdd00";
-      ctx.beginPath();
-      ctx.arc(cx - 6, en.y + 10 - bounce, 3, 0, Math.PI * 2);
-      ctx.arc(cx + 7, en.y + 12 - bounce, 2.5, 0, Math.PI * 2);
-      ctx.fill();
-      // Olhos
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(cx - 8, en.y + 16 - bounce, 6, 6);
-      ctx.fillRect(cx + 2, en.y + 16 - bounce, 6, 6);
-      ctx.fillStyle = "#111";
-      ctx.fillRect(cx - 6, en.y + 18 - bounce, 3, 3);
-      ctx.fillRect(cx + 4, en.y + 18 - bounce, 3, 3);
+      drawPixelSprite(ctx, SLIME_SPRITE, SLIME_PALETTE, en.x, en.y, 2.6, en.dir === -1);
     }
-    ctx.restore();
   }
 
   // Projéteis dos inimigos atiradores
@@ -930,29 +867,12 @@ function draw() {
     ctx.stroke();
   }
 
-  // Chefe Final (Lorde Malakor estilizado)
+  // Chefe Final (Cavaleiro Pixel Art)
   if (boss && boss.hp > 0) {
-    ctx.save();
-    ctx.fillStyle = boss.hurtTimer % 6 > 2 ? "#ffffff" : "#7209b7";
-    ctx.fillRect(boss.x, boss.y + 12, boss.w, boss.h - 12);
-    ctx.strokeStyle = "#111";
-    ctx.lineWidth = 3;
-    ctx.strokeRect(boss.x, boss.y + 12, boss.w, boss.h - 12);
-    // Chifres
-    ctx.fillStyle = "#ffdd00";
-    ctx.beginPath();
-    ctx.moveTo(boss.x + 8, boss.y + 12);
-    ctx.lineTo(boss.x - 4, boss.y - 8);
-    ctx.lineTo(boss.x + 20, boss.y + 12);
-    ctx.moveTo(boss.x + boss.w - 8, boss.y + 12);
-    ctx.lineTo(boss.x + boss.w + 4, boss.y - 8);
-    ctx.lineTo(boss.x + boss.w - 20, boss.y + 12);
-    ctx.fill();
-    // Olhos
-    ctx.fillStyle = "#ff2a2a";
-    ctx.fillRect(boss.x + 14, boss.y + 28, 12, 12);
-    ctx.fillRect(boss.x + 46, boss.y + 28, 12, 12);
-    ctx.restore();
+    const pal = boss.hurtTimer % 6 > 2
+      ? { K: "#ffffff", Y: "#ffffff", G: "#ffffff", S: "#ffffff", C: "#ffffff" }
+      : BOSS_PALETTE;
+    drawPixelSprite(ctx, BOSS_SPRITE, pal, boss.x, boss.y, 5.5, boss.dir === -1);
   }
 
   // Projéteis do chefe e do jogador
@@ -981,70 +901,12 @@ function draw() {
     ctx.fill();
   }
 
-  // Jogadora: Vaca Super Mu 2D estilizada
+  // Jogadora: Vaca Super Mu Pixel Art
   if (player.invulnTimer % 6 < 3) {
-    ctx.save();
-    const px = player.x;
-    const py = player.y;
-    const pw = player.w;
-    const ph = player.h;
-    const walkOffset = Math.abs(player.vx) > 0.5 && player.onGround ? Math.sin(Date.now() / 70) * 4 : 0;
-
-    // Capa vermelha/dourada atrás
-    ctx.fillStyle = player.power === "fire" ? "#ffdd00" : "#ff2a2a";
-    ctx.beginPath();
-    ctx.moveTo(px + pw / 2, py + 12);
-    ctx.lineTo(px + (player.facing === 1 ? -8 : pw + 8), py + ph - 6);
-    ctx.lineTo(px + pw / 2, py + ph - 10);
-    ctx.closePath();
-    ctx.fill();
-
-    // Corpo branco da vaca
-    ctx.fillStyle = player.starTimer > 0
-      ? `hsl(${(Date.now() / 5) % 360}, 95%, 65%)`
-      : "#ffffff";
-    ctx.fillRect(px + 2, py + 8, pw - 4, ph - 14);
-    ctx.strokeStyle = "#111";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(px + 2, py + 8, pw - 4, ph - 14);
-
-    // Manchas pretas de vaca
-    ctx.fillStyle = "#111";
-    ctx.beginPath();
-    ctx.arc(px + 10, py + 20, 4, 0, Math.PI * 2);
-    ctx.arc(px + 22, py + 26, 3.5, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Chifres amarelos
-    ctx.fillStyle = "#ffdd00";
-    ctx.beginPath();
-    ctx.moveTo(px + 6, py + 8);
-    ctx.lineTo(px + 3, py);
-    ctx.lineTo(px + 11, py + 8);
-    ctx.moveTo(px + pw - 6, py + 8);
-    ctx.lineTo(px + pw - 3, py);
-    ctx.lineTo(px + pw - 11, py + 8);
-    ctx.fill();
-
-    // Focinho rosa
-    ctx.fillStyle = "#ff8fa3";
-    const snoutX = player.facing === 1 ? px + 12 : px + 4;
-    ctx.fillRect(snoutX, py + 16, 16, 9);
-    ctx.fillStyle = "#111";
-    ctx.fillRect(snoutX + 3, py + 19, 2, 2);
-    ctx.fillRect(snoutX + 11, py + 19, 2, 2);
-
-    // Olhos
-    ctx.fillStyle = "#111";
-    const eyeX = player.facing === 1 ? px + 18 : px + 8;
-    ctx.fillRect(eyeX, py + 11, 4, 4);
-
-    // Patinhas animadas
-    ctx.fillStyle = "#111";
-    ctx.fillRect(px + 5, py + ph - 6 + walkOffset, 7, 6);
-    ctx.fillRect(px + pw - 12, py + ph - 6 - walkOffset, 7, 6);
-
-    ctx.restore();
+    const pal = player.power === "fire" ? COW_PALETTE_FIRE : COW_PALETTE_NORMAL;
+    const scale = player.power === "normal" ? 2.4 : 2.9;
+    const bounceY = Math.abs(player.vx) > 0.5 && player.onGround ? Math.sin(Date.now() / 65) * 2 : 0;
+    drawPixelSprite(ctx, COW_SPRITE, pal, player.x - 2, player.y + bounceY, scale, player.facing === -1);
   }
 
   // Partículas

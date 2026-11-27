@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Super Mu — A Jornada dos 10 Cristais</title>
+  <title>SUPER MU - Pixel Edition</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="game-wrapper">
     <header id="hud">
-      <div class="hud-item">❤️ Vidas: <span id="hud-lives">3</span></div>
-      <div class="hud-item">🪙 Moedas: <span id="hud-coins">0</span></div>
-      <div class="hud-item">⭐ Pontos: <span id="hud-score">0</span></div>
-      <div class="hud-item">🗺️ Fase: <span id="hud-level">1/10</span></div>
-      <div class="hud-item">⚡ Poder: <span id="hud-power">Normal</span></div>
-      <div class="hud-item badge" id="hud-attr">Clássico</div>
+      <div class="hud-item">VIDAS <span id="hud-lives">3</span></div>
+      <div class="hud-item">MOEDAS <span id="hud-coins">0</span></div>
+      <div class="hud-item">PONTOS <span id="hud-score">0</span></div>
+      <div class="hud-item">FASE <span id="hud-level">1/10</span></div>
+      <div class="hud-item">PODER <span id="hud-power">NORMAL</span></div>
+      <div class="hud-item badge" id="hud-attr">CLASSICO</div>
     </header>
 
     <div id="canvas-container">
@@ -23,21 +23,20 @@
       <!-- Tela Inicial -->
       <div id="screen-menu" class="overlay active">
         <div class="card cover-card">
-          <div class="cover-badge">🐮 EDIÇÃO ARCADE</div>
+          <div class="cover-badge">16-BIT ARCADE</div>
           <h1 class="super-mu-title">
             <span class="word-super">SUPER</span>
-            <span class="word-mu">MU!</span>
+            <span class="word-mu">MU</span>
           </h1>
-          <p class="subtitle">A Vaca Mais Corajosa dos 10 Mundos</p>
+          <p class="subtitle">A JORNADA DOS 10 CRISTAIS</p>
           <p class="story-box">
-            O Reino Pasto Verde vivia feliz graças aos <strong>10 Cristais de Leite Estelar</strong>.
-            Mas o malvado <strong>Lorde Malakor</strong> roubou os cristais!
-            Agora, a destemida vaca <strong>Mu</strong> precisa atravessar 10 mundos cheios de ação, inimigos atiradores e poderes especiais para salvar a fazenda!
+            O Reino Pasto Verde teve seus 10 Cristais Estelares roubados por Lorde Malakor.
+            Controle a vaca Mu por 10 mundos, enfrente inimigos atiradores e recupere todos os cristais.
           </p>
           <div class="menu-buttons">
-            <button id="btn-play" class="btn primary">▶ Começar Aventura</button>
-            <button id="btn-levels" class="btn secondary">🗺️ Selecionar Fase</button>
-            <button id="btn-controls" class="btn secondary">🎮 Controles</button>
+            <button id="btn-play" class="btn primary">START GAME</button>
+            <button id="btn-levels" class="btn secondary">FASES</button>
+            <button id="btn-controls" class="btn secondary">CONTROLES</button>
           </div>
         </div>
       </div>
@@ -45,11 +44,11 @@
       <!-- Seletor de Fases -->
       <div id="screen-levels" class="overlay">
         <div class="card wide">
-          <h2>🗺️ Escolha a Fase</h2>
+          <h2>SELECIONAR FASE</h2>
           <div id="level-grid" class="level-grid"></div>
           <div class="menu-buttons">
-            <button id="btn-unlock-all" class="btn warning">🔓 Desbloquear Todas</button>
-            <button id="btn-back-menu" class="btn secondary">⬅ Voltar</button>
+            <button id="btn-unlock-all" class="btn warning">DESBLOQUEAR TODAS</button>
+            <button id="btn-back-menu" class="btn secondary">VOLTAR</button>
           </div>
         </div>
       </div>
@@ -57,15 +56,15 @@
       <!-- Controles -->
       <div id="screen-controls" class="overlay">
         <div class="card">
-          <h2>🎮 Controles</h2>
+          <h2>CONTROLES</h2>
           <ul class="controls-list">
-            <li><strong>Mover:</strong> Setas ⬅ ➡ ou <code>A</code> / <code>D</code></li>
-            <li><strong>Pular / Pulo Duplo:</strong> Seta ⬆, <code>W</code> ou <code>Espaço</code></li>
-            <li><strong>Bola de Fogo (Flor):</strong> <code>F</code> ou <code>Z</code></li>
-            <li><strong>Dash Aéreo (Fases 6+):</strong> <code>Shift</code> ou <code>X</code></li>
-            <li><strong>Pausar:</strong> <code>P</code> ou <code>Esc</code></li>
+            <li><strong>MOVER:</strong> Setas ou <code>A</code> / <code>D</code></li>
+            <li><strong>PULAR / DUPLO:</strong> Seta Cima, <code>W</code> ou <code>Espaco</code></li>
+            <li><strong>BOLA DE FOGO:</strong> <code>F</code> ou <code>Z</code></li>
+            <li><strong>DASH AEREO (6+):</strong> <code>Shift</code> ou <code>X</code></li>
+            <li><strong>PAUSAR:</strong> <code>P</code> ou <code>Esc</code></li>
           </ul>
-          <button id="btn-close-controls" class="btn primary">Entendi!</button>
+          <button id="btn-close-controls" class="btn primary">OK</button>
         </div>
       </div>
 
@@ -73,21 +72,21 @@
       <div id="screen-story" class="overlay">
         <div class="card">
           <div class="story-badge" id="story-level-tag">FASE 1</div>
-          <h2 id="story-title">Planície dos Cogumelos</h2>
-          <p id="story-attr-desc" class="attr-pill">Atributo: Clássico</p>
+          <h2 id="story-title">Planicie dos Cogumelos</h2>
+          <p id="story-attr-desc" class="attr-pill">Atributo: Classico</p>
           <p id="story-text" class="story-box"></p>
-          <button id="btn-start-level" class="btn primary">🚀 Iniciar Fase</button>
+          <button id="btn-start-level" class="btn primary">INICIAR FASE</button>
         </div>
       </div>
 
       <!-- Pausa -->
       <div id="screen-pause" class="overlay">
         <div class="card">
-          <h2>⏸️ Jogo Pausado</h2>
+          <h2>PAUSADO</h2>
           <div class="menu-buttons">
-            <button id="btn-resume" class="btn primary">▶ Continuar</button>
-            <button id="btn-restart-level" class="btn secondary">🔄 Reiniciar Fase</button>
-            <button id="btn-quit-menu" class="btn danger">🏠 Menu Principal</button>
+            <button id="btn-resume" class="btn primary">CONTINUAR</button>
+            <button id="btn-restart-level" class="btn secondary">REINICIAR</button>
+            <button id="btn-quit-menu" class="btn danger">MENU</button>
           </div>
         </div>
       </div>
@@ -95,11 +94,11 @@
       <!-- Game Over / Vitória -->
       <div id="screen-end" class="overlay">
         <div class="card">
-          <h2 id="end-title">Fim de Jogo</h2>
+          <h2 id="end-title">FIM DE JOGO</h2>
           <p id="end-text" class="story-box"></p>
           <div class="menu-buttons">
-            <button id="btn-end-retry" class="btn primary">🔄 Tentar Novamente</button>
-            <button id="btn-end-menu" class="btn secondary">🏠 Menu Principal</button>
+            <button id="btn-end-retry" class="btn primary">TENTAR DE NOVO</button>
+            <button id="btn-end-menu" class="btn secondary">MENU</button>
           </div>
         </div>
       </div>
@@ -108,17 +107,18 @@
     <!-- Controles Touch para Mobile -->
     <div id="touch-controls">
       <div class="touch-left">
-        <button class="touch-btn" data-key="left">⬅</button>
-        <button class="touch-btn" data-key="right">➡</button>
+        <button class="touch-btn" data-key="left">&lt;</button>
+        <button class="touch-btn" data-key="right">&gt;</button>
       </div>
       <div class="touch-right">
-        <button class="touch-btn" data-key="fire">🔥</button>
-        <button class="touch-btn" data-key="dash">⚡</button>
-        <button class="touch-btn jump" data-key="jump">⬆</button>
+        <button class="touch-btn" data-key="fire">F</button>
+        <button class="touch-btn" data-key="dash">D</button>
+        <button class="touch-btn jump" data-key="jump">^</button>
       </div>
     </div>
   </div>
 
+  <script src="sprites.js"></script>
   <script src="levels.js"></script>
   <script src="game.js"></script>
 </body>
