@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Super Luma Bros — Os 10 Cristais Estelares</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="game-wrapper">
+    <header id="hud">
+      <div class="hud-item">❤️ Vidas: <span id="hud-lives">3</span></div>
+      <div class="hud-item">🪙 Moedas: <span id="hud-coins">0</span></div>
+      <div class="hud-item">⭐ Pontos: <span id="hud-score">0</span></div>
+      <div class="hud-item">🗺️ Fase: <span id="hud-level">1/10</span></div>
+      <div class="hud-item">⚡ Poder: <span id="hud-power">Normal</span></div>
+      <div class="hud-item badge" id="hud-attr">Clássico</div>
+    </header>
+
+    <div id="canvas-container">
+      <canvas id="gameCanvas" width="960" height="540"></canvas>
+
+      <!-- Tela Inicial -->
+      <div id="screen-menu" class="overlay active">
+        <div class="card">
+          <h1>🌟 SUPER LUMA BROS</h1>
+          <p class="subtitle">A Jornada dos 10 Cristais Estelares</p>
+          <p class="story-box">
+            O Reino de Veridia vivia em harmonia graças aos <strong>10 Cristais Estelares</strong>.
+            Mas o temível <strong>Lorde Malakor</strong> roubou os cristais e os espalhou por 10 mundos mágicos!
+            Ajude <strong>Luma</strong> a atravessar florestas, gelo, desertos, vulcões e o Castelo do Eclipse para restaurar a luz.
+          </p>
+          <div class="menu-buttons">
+            <button id="btn-play" class="btn primary">▶ Começar Aventura</button>
+            <button id="btn-levels" class="btn secondary">🗺️ Selecionar Fase</button>
+            <button id="btn-controls" class="btn secondary">🎮 Controles</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seletor de Fases -->
+      <div id="screen-levels" class="overlay">
+        <div class="card wide">
+          <h2>🗺️ Escolha a Fase</h2>
+          <div id="level-grid" class="level-grid"></div>
+          <div class="menu-buttons">
+            <button id="btn-unlock-all" class="btn warning">🔓 Desbloquear Todas</button>
+            <button id="btn-back-menu" class="btn secondary">⬅ Voltar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controles -->
+      <div id="screen-controls" class="overlay">
+        <div class="card">
+          <h2>🎮 Controles</h2>
+          <ul class="controls-list">
+            <li><strong>Mover:</strong> Setas ⬅ ➡ ou <code>A</code> / <code>D</code></li>
+            <li><strong>Pular / Pulo Duplo:</strong> Seta ⬆, <code>W</code> ou <code>Espaço</code></li>
+            <li><strong>Bola de Fogo (Flor):</strong> <code>F</code> ou <code>Z</code></li>
+            <li><strong>Dash Aéreo (Fases 6+):</strong> <code>Shift</code> ou <code>X</code></li>
+            <li><strong>Pausar:</strong> <code>P</code> ou <code>Esc</code></li>
+          </ul>
+          <button id="btn-close-controls" class="btn primary">Entendi!</button>
+        </div>
+      </div>
+
+      <!-- Diálogo / História da Fase -->
+      <div id="screen-story" class="overlay">
+        <div class="card">
+          <div class="story-badge" id="story-level-tag">FASE 1</div>
+          <h2 id="story-title">Planície dos Cogumelos</h2>
+          <p id="story-attr-desc" class="attr-pill">Atributo: Clássico</p>
+          <p id="story-text" class="story-box"></p>
+          <button id="btn-start-level" class="btn primary">🚀 Iniciar Fase</button>
+        </div>
+      </div>
+
+      <!-- Pausa -->
+      <div id="screen-pause" class="overlay">
+        <div class="card">
+          <h2>⏸️ Jogo Pausado</h2>
+          <div class="menu-buttons">
+            <button id="btn-resume" class="btn primary">▶ Continuar</button>
+            <button id="btn-restart-level" class="btn secondary">🔄 Reiniciar Fase</button>
+            <button id="btn-quit-menu" class="btn danger">🏠 Menu Principal</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Over / Vitória -->
+      <div id="screen-end" class="overlay">
+        <div class="card">
+          <h2 id="end-title">Fim de Jogo</h2>
+          <p id="end-text" class="story-box"></p>
+          <div class="menu-buttons">
+            <button id="btn-end-retry" class="btn primary">🔄 Tentar Novamente</button>
+            <button id="btn-end-menu" class="btn secondary">🏠 Menu Principal</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controles Touch para Mobile -->
+    <div id="touch-controls">
+      <div class="touch-left">
+        <button class="touch-btn" data-key="left">⬅</button>
+        <button class="touch-btn" data-key="right">➡</button>
+      </div>
+      <div class="touch-right">
+        <button class="touch-btn" data-key="fire">🔥</button>
+        <button class="touch-btn" data-key="dash">⚡</button>
+        <button class="touch-btn jump" data-key="jump">⬆</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="levels.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

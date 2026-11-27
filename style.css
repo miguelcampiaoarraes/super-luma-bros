@@ -1,0 +1,293 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  background: radial-gradient(circle at top, #1a1c2c, #0d0e15);
+  color: #f4f4f8;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#game-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 980px;
+  padding: 8px;
+}
+
+#hud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 960px;
+  background: rgba(20, 24, 38, 0.9);
+  border: 2px solid #3a416f;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  gap: 8px;
+}
+
+.hud-item.badge {
+  background: linear-gradient(135deg, #ff7b00, #ffb700);
+  color: #111;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+#canvas-container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 3px solid #4d568d;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
+  background: #000;
+}
+
+#gameCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 12, 22, 0.82);
+  backdrop-filter: blur(5px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 10;
+}
+
+.overlay.active {
+  display: flex;
+}
+
+.card {
+  background: linear-gradient(160deg, #1f2544, #14182d);
+  border: 2px solid #5965a8;
+  border-radius: 16px;
+  padding: 24px 28px;
+  max-width: 540px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.card.wide {
+  max-width: 740px;
+}
+
+.card h1 {
+  font-size: 2rem;
+  color: #ffd166;
+  text-shadow: 0 3px 0 #b85d00;
+  margin-bottom: 4px;
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  color: #ffd166;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #9ec5ff;
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+}
+
+.story-box {
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 4px solid #ffd166;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #e2e8f0;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.story-badge {
+  display: inline-block;
+  background: #4d568d;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+}
+
+.attr-pill {
+  display: inline-block;
+  background: rgba(255, 209, 102, 0.15);
+  color: #ffd166;
+  border: 1px solid #ffd166;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s, filter 0.12s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #2ec4b6, #1b9aaa);
+  color: #fff;
+}
+
+.btn.secondary {
+  background: #3a416f;
+  color: #fff;
+}
+
+.btn.warning {
+  background: #f59e0b;
+  color: #111;
+}
+
+.btn.danger {
+  background: #ef4444;
+  color: #fff;
+}
+
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+  gap: 10px;
+  margin: 14px 0 18px;
+}
+
+.level-btn {
+  background: #283056;
+  border: 2px solid #4d568d;
+  border-radius: 10px;
+  padding: 10px 8px;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.15s;
+}
+
+.level-btn:hover:not(:disabled) {
+  border-color: #ffd166;
+  transform: translateY(-2px);
+}
+
+.level-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.level-btn .lvl-num {
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffd166;
+}
+
+.level-btn .lvl-name {
+  font-size: 11px;
+  color: #cbd5e1;
+  margin-top: 4px;
+}
+
+.controls-list {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 18px;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.controls-list code {
+  background: #2c345e;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #ffd166;
+}
+
+#touch-controls {
+  display: none;
+  width: 100%;
+  max-width: 960px;
+  justify-content: space-between;
+  padding: 4px 8px;
+}
+
+.touch-left, .touch-right {
+  display: flex;
+  gap: 10px;
+}
+
+.touch-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 2px solid #5965a8;
+  background: rgba(31, 37, 68, 0.85);
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.touch-btn.jump {
+  background: rgba(46, 196, 182, 0.85);
+}
+
+@media (max-width: 768px) {
+  #touch-controls {
+    display: flex;
+  }
+  #hud {
+    font-size: 12px;
+  }
+}
