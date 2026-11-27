@@ -169,6 +169,47 @@ const COIN_SPRITE = [
   "..KKKK.."
 ];
 
+// 7b. Itens das Lucky Blocks (Cogumelo, Flor de Fogo, Estrela)
+const MUSHROOM_SPRITE = [
+  "...KKKKKK...",
+  ".KKRRRRRRKK.",
+  "KRRWWRRRWWRK",
+  "KRWWWRRWWWRK",
+  "KRRRRRRRRRRK",
+  ".KKKKKKKKKK.",
+  "..KSSSSSSK..",
+  "..KSKSSKSK..",
+  "..KSSSSSSK..",
+  "...KKKKKK..."
+];
+
+const FLOWER_SPRITE = [
+  "..KKKKKKKK..",
+  ".KWWWWWWWWK.",
+  "KWWOOOOOOWWK",
+  "KWWOYYYYOWWK",
+  "KWWOOOOOOWWK",
+  ".KWWWWWWWWK.",
+  "..KKKKKKKK..",
+  "....KGGK....",
+  ".KK.KGGK.KK.",
+  "KGGKKGGKKGGK",
+  ".KKKKKKKKKK."
+];
+
+const STAR_SPRITE = [
+  ".....KK.....",
+  "....KYYK....",
+  "....KYYK....",
+  "KKKKYYYYKKKK",
+  "KYYYYYYYYYYK",
+  ".KYYKYYKYYK.",
+  "..KYKYYKYK..",
+  "..KYYYYYYK..",
+  ".KYYK..KYYK.",
+  "KKKK....KKKK"
+];
+
 // 8. Fundo Parallax Pixel Art (Montanhas e Pinheiros inspirados na imagem 2)
 function drawPixelParallax(ctx, cameraX, canvasWidth, canvasHeight, level) {
   // Nuvens pixeladas

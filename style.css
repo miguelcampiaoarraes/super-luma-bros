@@ -100,6 +100,30 @@ body {
   box-shadow: 0 10px 0 #8a0000, 0 16px 32px rgba(0, 0, 0, 0.5);
 }
 
+.cover-card {
+  background: linear-gradient(160deg, #7209b7, #f72585);
+  border: 5px solid #ff85a1;
+  box-shadow: 0 10px 0 #3a0ca3, 0 16px 32px rgba(0, 0, 0, 0.5);
+  padding: 36px 28px;
+}
+
+.cover-card .super-mu-title {
+  margin-bottom: 24px;
+}
+
+.cover-card .word-super {
+  color: #ffffff;
+}
+
+.cover-card .word-mu {
+  color: #ff85a1;
+}
+
+.cover-card .cover-badge {
+  background: #3a0ca3;
+  color: #ff85a1;
+  border-color: #ff85a1;
+}
 .cover-badge {
   display: inline-block;
   background: #34c759;
@@ -127,6 +151,7 @@ body {
   color: #ffdd00;
   text-shadow: 4px 4px 0 #111, -2px -2px 0 #111;
   transform: rotate(-3deg);
+.cover-badge {
   display: inline-block;
 }
 
@@ -136,6 +161,7 @@ body {
   color: #34c759;
   text-shadow: 4px 4px 0 #111, -2px -2px 0 #111;
   transform: rotate(3deg);
+.cover-badge {
   display: inline-block;
   animation: bounceTitle 1.2s infinite alternate ease-in-out;
 }
@@ -181,6 +207,7 @@ body {
 }
 
 .story-badge {
+.cover-badge {
   display: inline-block;
   background: #4d568d;
   color: #fff;
@@ -192,6 +219,7 @@ body {
 }
 
 .attr-pill {
+.cover-badge {
   display: inline-block;
   background: rgba(255, 209, 102, 0.15);
   color: #ffd166;

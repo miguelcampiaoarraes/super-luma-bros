@@ -837,10 +837,15 @@ function draw() {
     }
   }
 
-  // Itens
+  // Itens das Lucky Blocks em Pixel Art
   for (const it of items) {
-    ctx.fillStyle = it.type === "mushroom" ? "#e63946" : it.type === "flower" ? "#ff9f1c" : "#ffd166";
-    ctx.fillRect(it.x, it.y, it.w, it.h);
+    if (it.type === "mushroom") {
+      drawPixelSprite(ctx, MUSHROOM_SPRITE, { K: "#111111", R: "#ff2a2a", W: "#ffffff", S: "#f4d3a1" }, it.x, it.y, 2.4);
+    } else if (it.type === "flower") {
+      drawPixelSprite(ctx, FLOWER_SPRITE, { K: "#111111", W: "#ffffff", O: "#ff7b00", Y: "#ffdd00", G: "#34c759" }, it.x, it.y, 2.4);
+    } else {
+      drawPixelSprite(ctx, STAR_SPRITE, { K: "#111111", Y: "#ffdd00" }, it.x, it.y, 2.4);
+    }
   }
 
   // Inimigos Pixel Art
