@@ -76,7 +76,7 @@ body {
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(10, 12, 22, 0.82);
+  background: rgba(10, 5, 20, 0.85);
   backdrop-filter: blur(5px);
   display: none;
   justify-content: center;
@@ -91,84 +91,67 @@ body {
 
 .card {
   background: linear-gradient(160deg, #5a189a, #3c096c);
-  border: 5px solid #c77dff;
+  border: 4px solid #c77dff;
   border-radius: 20px;
-  padding: 24px 28px;
-  max-width: 540px;
+  padding: 26px 30px;
+  max-width: 560px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 10px 0 #240046, 0 16px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 0 #240046, 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
 .cover-card {
-  background: linear-gradient(160deg, #7209b7, #f72585);
+  background: linear-gradient(160deg, #6a0dad, #d81159);
   border: 5px solid #ff85a1;
-  box-shadow: 0 10px 0 #3a0ca3, 0 16px 32px rgba(0, 0, 0, 0.5);
-  padding: 36px 28px;
+  box-shadow: 0 12px 0 #2b0052, 0 20px 45px rgba(0, 0, 0, 0.6);
+  padding: 30px 28px;
 }
 
-.cover-card .super-mu-title {
-  margin-bottom: 24px;
-}
-
-.cover-card .word-super {
-  color: #ffffff;
-}
-
-.cover-card .word-mu {
-  color: #ff85a1;
-}
-
-.cover-card .cover-badge {
-  background: #3a0ca3;
-  color: #ff85a1;
-  border-color: #ff85a1;
-}
 .cover-badge {
   display: inline-block;
-  background: #34c759;
-  color: #111;
+  background: #3a0ca3;
+  color: #ff85a1;
   font-weight: 900;
   font-size: 12px;
-  padding: 4px 12px;
+  padding: 5px 14px;
   border-radius: 999px;
-  border: 2px solid #fff;
+  border: 2px solid #ff85a1;
   margin-bottom: 8px;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
 }
 
 .super-mu-title {
   display: flex;
   justify-content: center;
   align-items: baseline;
-  gap: 10px;
-  margin-bottom: 6px;
+  gap: 12px;
+  margin: 10px 0 14px 0;
 }
 
 .word-super {
-  font-size: 2.3rem;
+  font-size: 2.8rem;
   font-weight: 900;
-  color: #ffdd00;
-  text-shadow: 4px 4px 0 #111, -2px -2px 0 #111;
+  color: #ffffff;
+  text-shadow: 3px 3px 0 #3a0ca3, -2px -2px 0 #3a0ca3, 0 4px 10px rgba(0, 0, 0, 0.5);
   transform: rotate(-3deg);
-.cover-badge {
   display: inline-block;
+  letter-spacing: 2px;
 }
 
 .word-mu {
-  font-size: 3rem;
+  font-size: 3.6rem;
   font-weight: 900;
-  color: #34c759;
-  text-shadow: 4px 4px 0 #111, -2px -2px 0 #111;
+  color: #ff85a1;
+  text-shadow: 3px 3px 0 #3a0ca3, -2px -2px 0 #3a0ca3, 0 4px 10px rgba(247, 37, 133, 0.5);
   transform: rotate(3deg);
-.cover-badge {
   display: inline-block;
+  letter-spacing: 2px;
   animation: bounceTitle 1.2s infinite alternate ease-in-out;
 }
 
 @keyframes bounceTitle {
   from { transform: rotate(3deg) translateY(0); }
-  to { transform: rotate(3deg) translateY(-6px); }
+  to { transform: rotate(3deg) translateY(-8px); }
 }
 
 .card.wide {
@@ -183,27 +166,32 @@ body {
 }
 
 .card h2 {
-  font-size: 1.5rem;
-  color: #ffd166;
-  margin-bottom: 10px;
+  font-size: 1.6rem;
+  color: #ffccd5;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
 }
 
 .subtitle {
-  color: #9ec5ff;
-  font-size: 0.95rem;
+  color: #ffccd5;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
   margin-bottom: 14px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .story-box {
-  background: rgba(0, 0, 0, 0.3);
-  border-left: 4px solid #ffd166;
-  padding: 12px 14px;
-  border-radius: 8px;
+  background: rgba(24, 0, 48, 0.65);
+  border-left: 5px solid #f72585;
+  border-radius: 10px;
+  padding: 14px 18px;
   font-size: 0.95rem;
-  line-height: 1.5;
-  color: #e2e8f0;
-  margin-bottom: 18px;
+  line-height: 1.6;
+  color: #f3e8ff;
+  margin-bottom: 20px;
   text-align: left;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .story-badge {
@@ -233,79 +221,115 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
 }
 
 .btn {
-  border: none;
-  border-radius: 10px;
-  padding: 10px 18px;
+  position: relative;
+  border: 3px solid #ffffff;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-family: inherit;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: transform 0.12s, filter 0.12s;
+  transition: all 0.15s ease-in-out;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
 }
 
 .btn:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
+  transform: translateY(-3px);
+  filter: brightness(1.15);
 }
 
 .btn:active {
-  transform: translateY(0);
+  transform: translateY(2px);
 }
 
 .btn.primary {
-  background: #f72585;
+  background: linear-gradient(180deg, #ff4d94 0%, #f72585 50%, #b5179e 100%);
   color: #ffffff;
-  border: 3px solid #ffffff;
-  box-shadow: 0 4px 0 #b5179e;
+  border-color: #ffb3d9;
+  box-shadow: 0 6px 0 #7209b7, 0 10px 20px rgba(247, 37, 133, 0.4);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.btn.primary:hover {
+  box-shadow: 0 8px 0 #7209b7, 0 14px 25px rgba(247, 37, 133, 0.6);
+}
+
+.btn.primary:active {
+  box-shadow: 0 2px 0 #7209b7;
 }
 
 .btn.secondary {
-  background: #7209b7;
+  background: linear-gradient(180deg, #9d4edd 0%, #7209b7 50%, #5a189a 100%);
   color: #ffffff;
-  border: 3px solid #c77dff;
-  box-shadow: 0 4px 0 #3c096c;
+  border-color: #e0aaff;
+  box-shadow: 0 6px 0 #240046, 0 10px 20px rgba(114, 9, 183, 0.4);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.btn.secondary:hover {
+  box-shadow: 0 8px 0 #240046, 0 14px 25px rgba(114, 9, 183, 0.6);
+}
+
+.btn.secondary:active {
+  box-shadow: 0 2px 0 #240046;
 }
 
 .btn.warning {
-  background: #f59e0b;
-  color: #111;
+  background: linear-gradient(180deg, #ffd166 0%, #f59e0b 50%, #d97706 100%);
+  color: #111111;
+  border-color: #fff3b0;
+  box-shadow: 0 6px 0 #78350f, 0 10px 20px rgba(245, 158, 11, 0.3);
 }
 
 .btn.danger {
-  background: #ef4444;
-  color: #fff;
+  background: linear-gradient(180deg, #ff6b6b 0%, #ef4444 50%, #b91c1c 100%);
+  color: #ffffff;
+  border-color: #ffc9c9;
+  box-shadow: 0 6px 0 #7f1d1d, 0 10px 20px rgba(239, 68, 68, 0.4);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .level-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
-  gap: 10px;
-  margin: 14px 0 18px;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+  margin: 16px 0 20px;
 }
 
 .level-btn {
   background: #240046;
   border: 2px solid #c77dff;
-  border-radius: 10px;
-  padding: 12px 10px;
+  border-radius: 12px;
+  padding: 14px 10px;
   color: #fff;
   cursor: pointer;
   text-align: center;
-  transition: 0.15s;
+  transition: all 0.15s ease-in-out;
+  box-shadow: 0 4px 0 #120024;
 }
 
 .level-btn:hover:not(:disabled) {
   border-color: #ff85a1;
   background: #3c096c;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 0 #120024, 0 6px 15px rgba(255, 133, 161, 0.3);
 }
 
 .level-btn:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .level-btn .lvl-num {
@@ -324,16 +348,18 @@ body {
 .controls-list {
   list-style: none;
   text-align: left;
-  margin-bottom: 18px;
-  line-height: 1.8;
-  font-size: 14px;
+  margin-bottom: 20px;
+  line-height: 2;
+  font-size: 15px;
 }
 
 .controls-list code {
-  background: #2c345e;
-  padding: 2px 6px;
-  border-radius: 4px;
-  color: #ffd166;
+  background: #240046;
+  border: 1px solid #c77dff;
+  padding: 3px 8px;
+  border-radius: 6px;
+  color: #ffccd5;
+  font-weight: bold;
 }
 
 #touch-controls {
@@ -341,27 +367,28 @@ body {
   width: 100%;
   max-width: 960px;
   justify-content: space-between;
-  padding: 4px 8px;
+  padding: 6px 10px;
 }
 
 .touch-left, .touch-right {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .touch-btn {
-  width: 54px;
-  height: 54px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
-  border: 2px solid #5965a8;
-  background: rgba(31, 37, 68, 0.85);
+  border: 3px solid #ff85a1;
+  background: rgba(90, 24, 154, 0.9);
   color: #fff;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
+  box-shadow: 0 4px 0 #240046;
 }
 
 .touch-btn.jump {
-  background: rgba(46, 196, 182, 0.85);
+  background: rgba(247, 37, 133, 0.9);
 }
 
 @media (max-width: 768px) {
@@ -370,5 +397,15 @@ body {
   }
   #hud {
     font-size: 12px;
+  }
+  .word-super {
+    font-size: 2rem;
+  }
+  .word-mu {
+    font-size: 2.6rem;
+  }
+  .btn {
+    padding: 10px 18px;
+    font-size: 13px;
   }
 }
